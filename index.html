@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>2026 이우 학부모축제 완벽 가이드 | 터치카드</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2d6a4f;
+      --primary-light: #52b788;
+      --primary-dark: #1b4332;
+      --accent: #e76f51;
+      --bg: #f8f6f0;
+      --card-bg: #ffffff;
+      --text-main: #2b2b2b;
+      --text-sub: #555555;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-top: 8px;
+    }
+    .badge {
+      display: inline-block;
+      background-color: var(--primary-light);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    /* Progress & Navigation */
+    .status-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: #e2ddd3;
+      border-radius: 3px;
+      margin: 0 12px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 14.28%;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+
+    /* 3D Flip Card Container */
+    .card-scene {
+      width: 100%;
+      height: 480px;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 24px;
+      background: var(--card-bg);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1.5px solid rgba(45, 106, 79, 0.12);
+    }
+
+    /* Front Card (Question) */
+    .card-face-front {
+      background: linear-gradient(145deg, #ffffff 0%, #f4f8f5 100%);
+    }
+    .front-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tag {
+      background: #e8f3ed;
+      color: var(--primary);
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 12px;
+    }
+    .icon-q {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--primary-light);
+      opacity: 0.8;
+    }
+    .front-center {
+      text-align: center;
+      padding: 10px 0;
+    }
+    .emoji-display {
+      font-size: 54px;
+      margin-bottom: 18px;
+    }
+    .question-title {
+      font-size: 21px;
+      font-weight: 800;
+      line-height: 1.45;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+    }
+    .tap-hint {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(231, 111, 81, 0.08);
+      padding: 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Back Card (Answer) */
+    .card-face-back {
+      background: #ffffff;
+      transform: rotateY(180deg);
+      border-left: 5px solid var(--primary);
+    }
+    .back-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid #ece8df;
+    }
+    .badge-ans {
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .back-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .back-content {
+      flex: 1;
+      padding: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+    .info-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+    }
+    .item-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .info-item strong {
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .tip-box {
+      background: #faf7f2;
+      border: 1px dashed #d1c7b7;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: #634b35;
+    }
+    .tap-hint-back {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      padding-top: 6px;
+    }
+
+    /* Controls */
+    .controls {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .btn {
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-prev {
+      background: #e9e5dd;
+      color: #4a4a4a;
+    }
+    .btn-next {
+      background: var(--primary);
+      color: white;
+    }
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Jump Indicators (Dots) */
+    .dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d8d3c7;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active {
+      width: 22px;
+      border-radius: 4px;
+      background: var(--primary);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">2026 이우 학부모축제 최종 공지</div>
+    <h1>현장 200% 즐기기 터치카드</h1>
+    <div class="subtitle">카드를 탭(터치)하면 상세 가이드가 열립니다</div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="status-bar">
+    <span id="card-category">입장 & 오픈런</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <span id="card-counter">1 / 7</span>
+  </div>
+
+  <!-- Touch Card (Flip on Click) -->
+  <div class="card-scene" onclick="flipCard()">
+    <div class="card" id="card">
+      
+      <!-- FRONT (Question) -->
+      <div class="card-face card-face-front">
+        <div class="front-top">
+          <span class="tag" id="card-tag">STEP 1</span>
+          <span class="icon-q">Q</span>
+        </div>
+        <div class="front-center">
+          <div class="emoji-display" id="card-emoji">🏃‍♂️</div>
+          <h2 class="question-title" id="card-question">
+            몇 시까지 가야 하나요?<br>도착하자마자 해야 할 것은?
+          </h2>
+        </div>
+        <div class="tap-hint">
+          <span>👆 카드를 터치해서 답변 확인하기</span>
+        </div>
+      </div>
+
+      <!-- BACK (Answer) -->
+      <div class="card-face card-face-back">
+        <div class="back-header">
+          <span class="badge-ans">A</span>
+          <h3 id="card-back-title">입장 & 오픈런 안내</h3>
+        </div>
+        <div class="back-content" id="card-back-content">
+          <!-- Dynamic Content Loaded by JS -->
+        </div>
+        <div class="tap-hint-back">
+          <span>다시 터치하면 질문으로 돌아갑니다</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="controls">
+    <button class="btn btn-prev" onclick="prevCard(event)">◀ 이전 질문</button>
+    <button class="btn btn-next" onclick="nextCard(event)">다음 질문 ▶</button>
+  </div>
+
+  <!-- Indicator Dots -->
+  <div class="dots" id="dots-container"></div>
+</div>
+
+<script>
+  const cardsData = [
+    {
+      category: "입장 & 오픈런",
+      tag: "STEP 1 · 도착",
+      emoji: "🏃‍♂️",
+      question: "몇 시까지 가야 하나요?<br>도착하자마자 할 일은?",
+      backTitle: "오전 11:30 정시 도착 필수!",
+      items: [
+        { icon: "⏰", text: "<strong>11:30 길놀이 오프닝:</strong> 첫 시작부터 함께해야 축제의 환대와 열기를 제대로 느낄 수 있습니다." },
+        { icon: "🍿", text: "<strong>웰컴 뻥튀기 챙기기:</strong> 2,000개의 갓 튀긴 따뜻한 뻥튀기를 입장 직후 바로 맛보세요." },
+        { icon: "⚡", text: "<strong>양모 굿즈 오픈런:</strong> 현장 한정 선착순 판매! 관심 있으신 분은 도착 즉시 부스로 직행하세요." },
+        { icon: "🎁", text: "<strong>공식 굿즈 수령:</strong> 텀블러/양말 굿즈는 1부 여유 시간에 각 학년 부스에서 수령하세요." }
+      ],
+      tip: "💡 시작 시각에 늦으면 한정판 굿즈와 웰컴 먹거리를 놓칠 수 있습니다!"
+    },
+    {
+      category: "준비물 가이드",
+      tag: "STEP 2 · 챙기기",
+      emoji: "🥣",
+      question: "집에서 무엇을 챙겨가야<br>헛걸음하지 않을까요?",
+      backTitle: "가방 속 필수 준비물 체크",
+      items: [
+        { icon: "🍴", text: "<strong>개인 식기 & 수저 & 텀블러:</strong> 쓰레기 없는 축제를 위해 식기류는 반드시 챙겨오셔야 합니다." },
+        { icon: "🍲", text: "<strong>입구 넓은 다회용 그릇:</strong> 뜨거운 호박죽과 특선 먹거리를 든든히 담아갈 수 있습니다." },
+        { icon: "👜", text: "<strong>개인 쓰레기 봉투:</strong> 교내에 쓰레기통이 없으니 되가져갈 봉투를 챙겨주세요." },
+        { icon: "🎨", text: "<strong>패브릭 소품 지참:</strong> 에코백이나 파우치를 가져오시면 이우 심볼 실크스크린을 무료로 찍어드립니다." }
+      ],
+      tip: "💡 식기 미지참 시 현장 먹거리 이용에 큰 제한이 있을 수 있습니다."
+    },
+    {
+      category: "교통 & 주차",
+      tag: "STEP 3 · 이동",
+      emoji: "🚗",
+      question: "학교 운동장에<br>차를 세울 수 있나요?",
+      backTitle: "교내 주차 불가 & 외부 주차 안내",
+      items: [
+        { icon: "🚫", text: "<strong>교내 주차 전면 통제:</strong> 축제 지원 차량 외 모든 일반 차량은 교내 진입이 불가합니다." },
+        { icon: "🅿️", text: "<strong>동천근린공원 주차장:</strong> 인근 공원 주차장을 우선 이용해 주세요." },
+        { icon: "🅿️", text: "<strong>동천자이 공영주차장:</strong> 동천자이 아파트 앞 공영주차장은 주말 무료 개방됩니다." }
+      ],
+      tip: "💡 골목길 혼잡 방지를 위해 도보 또는 카풀·대중교통 이용을 강력히 권장합니다."
+    },
+    {
+      category: "1부 탐방 코스",
+      tag: "STEP 4 · 즐기기",
+      emoji: "🎪",
+      question: "1부 (11:30~13:40)에는<br>어디서 무엇을 즐기나요?",
+      backTitle: "학교 곳곳 보물찾기 코스",
+      items: [
+        { icon: "🍱", text: "<strong>풍성한 먹거리:</strong> 웰컴 푸드와 학년별 특별 간식이 오픈됩니다." },
+        { icon: "📸", text: "<strong>기수별 사진전 & 포토존:</strong> 추억이 담긴 사진전과 공동창작물을 둘러보세요." },
+        { icon: "📻", text: "<strong>찾아가는 이우라디오:</strong> 사연과 신청곡이 축제 현장에 실시간 방송됩니다." },
+        { icon: "🎬", text: "<strong>위원회 부스:</strong> 영화 상영(신학습관 B1 13:00), 실크스크린(13:10), 키링 나눔, 공유책장." }
+      ],
+      tip: "💡 2부가 시작되면 부스가 축소되므로 1부 동안 부지런히 교내를 탐방하세요!"
+    },
+    {
+      category: "2부 공연 & 대동",
+      tag: "STEP 5 · 모이기",
+      emoji: "💃",
+      question: "오후 2시 메인 무대와<br>대동놀이는 어디서 열리나요?",
+      backTitle: "운동장 전원 집결 & 무대",
+      items: [
+        { icon: "📍", text: "<strong>장소:</strong> 이우학교 대운동장 전면 집결 (14:00~16:00)" },
+        { icon: "🎸", text: "<strong>7팀의 감동 무대:</strong> 열정과 실력을 담은 공연이 연속으로 펼쳐집니다." },
+        { icon: "🕺", text: "<strong>댄스 챌린지:</strong> 다 함께 자리에서 일어나 신나게 춤추는 시간!" },
+        { icon: "🤝", text: "<strong>대동놀이 피날레:</strong> 모두가 손 맞잡고 하나 되는 이우의 전통 대동제." }
+      ],
+      tip: "💡 관람 에티켓은 '격한 리액션과 아낌없는 함성'입니다. 돗자리를 깔면 더 편합니다."
+    },
+    {
+      category: "화장실 & 세척",
+      tag: "STEP 6 · 시설",
+      emoji: "🚻",
+      question: "화장실 위치는 어디인가요?<br>사용한 그릇을 씻어도 되나요?",
+      backTitle: "화장실 사용 및 세척 금지 수칙",
+      items: [
+        { icon: "📍", text: "<strong>사용 가능 화장실:</strong> 도서관 옆 화장실, 달콤샘 앞 화장실." },
+        { icon: "❌", text: "<strong>사용 금지:</strong> 급식실 옆 화장실은 사용이 불가합니다." },
+        { icon: "⚠️", text: "<strong>세면대 세척 절대 금지:</strong> 설거지, 손빨래, 잔반 처리는 배관 고장의 원인이 됩니다." }
+      ],
+      tip: "💡 사용한 그릇은 비닐팩에 넣어 그대로 집으로 가져가 세척해 주세요."
+    },
+    {
+      category: "클린 에티켓",
+      tag: "STEP 7 · 마무리",
+      emoji: "🌱",
+      question: "아름다운 마무리를 위해<br>꼭 지켜야 할 약속은?",
+      backTitle: "머문 자리를 깨끗하게",
+      items: [
+        { icon: "🗑️", text: "<strong>쓰레기는 집으로:</strong> 행사장에 일반 쓰레기통이 없습니다. 각 가정으로 되가져갑니다." },
+        { icon: "🚭", text: "<strong>교내 전 구역 절대 금연:</strong> 아이들의 배움터이므로 교내 전면 금연입니다." },
+        { icon: "🍳", text: "<strong>요리방 식기 반출 금지:</strong> 실습실 비품이 밖으로 나가지 않도록 지켜주세요." },
+        { icon: "🧹", text: "<strong>모두 함께 뒷정리:</strong> 축제 후 의자 정리와 청소에 동참해 주시면 완성됩니다." }
+      ],
+      tip: "💡 이우 학부모의 품격은 행사가 끝난 뒤 깨끗한 운동장에서 드러납니다."
+    }
+  ];
+
+  let currentIndex = 0;
+  const cardElement = document.getElementById("card");
+
+  function renderCard(index) {
+    const data = cardsData[index];
+
+    // Card Category & Progress
+    document.getElementById("card-category").innerText = data.category;
+    document.getElementById("card-counter").innerText = `${index + 1} / ${cardsData.length}`;
+    document.getElementById("progress-fill").style.width = `${((index + 1) / cardsData.length) * 100}%`;
+
+    // Front View
+    document.getElementById("card-tag").innerText = data.tag;
+    document.getElementById("card-emoji").innerText = data.emoji;
+    document.getElementById("card-question").innerHTML = data.question;
+
+    // Back View
+    document.getElementById("card-back-title").innerText = data.backTitle;
+    const backContentContainer = document.getElementById("card-back-content");
+    backContentContainer.innerHTML = "";
+
+    data.items.forEach(item => {
+      const row = document.createElement("div");
+      row.className = "info-item";
+      row.innerHTML = `<span class="item-icon">${item.icon}</span><span>${item.text}</span>`;
+      backContentContainer.appendChild(row);
+    });
+
+    if (data.tip) {
+      const tipDiv = document.createElement("div");
+      tipDiv.className = "tip-box";
+      tipDiv.innerText = data.tip;
+      backContentContainer.appendChild(tipDiv);
+    }
+
+    // Update Dots
+    updateDots();
+  }
+
+  function flipCard() {
+    cardElement.classList.toggle("is-flipped");
+  }
+
+  function prevCard(e) {
+    e.stopPropagation();
+    if (currentIndex > 0) {
+      cardElement.classList.remove("is-flipped");
+      setTimeout(() => {
+        currentIndex--;
+        renderCard(currentIndex);
+      }, 150);
+    }
+  }
+
+  function nextCard(e) {
+    e.stopPropagation();
+    if (currentIndex < cardsData.length - 1) {
+      cardElement.classList.remove("is-flipped");
+      setTimeout(() => {
+        currentIndex++;
+        renderCard(currentIndex);
+      }, 150);
+    }
+  }
+
+  function initDots() {
+    const dotsContainer = document.getElementById("dots-container");
+    dotsContainer.innerHTML = "";
+    cardsData.forEach((_, idx) => {
+      const dot = document.createElement("div");
+      dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+      dot.onclick = (e) => {
+        e.stopPropagation();
+        cardElement.classList.remove("is-flipped");
+        setTimeout(() => {
+          currentIndex = idx;
+          renderCard(currentIndex);
+        }, 150);
+      };
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  function updateDots() {
+    const dots = document.querySelectorAll(".dot");
+    dots.forEach((dot, idx) => {
+      dot.className = `dot ${idx === currentIndex ? 'active' : ''}`;
+    });
+  }
+
+  // Initial Load
+  initDots();
+  renderCard(currentIndex);
+</script>
+
+</body>
+</html>
