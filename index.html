@@ -8,15 +8,15 @@
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
   <style>
     :root {
-      --primary: #2d6a4f;
-      --primary-light: #52b788;
-      --primary-dark: #1b4332;
-      --accent: #e76f51;
-      --bg: #f8f6f0;
-      --card-bg: #ffffff;
-      --text-main: #2b2b2b;
+      --primary: #1e5f43;
+      --primary-light: #4ea87d;
+      --primary-dark: #113827;
+      --accent-coral: #ee6c4d;
+      --accent-amber: #f4a261;
+      --bg-cream: #faf7f2;
+      --text-main: #222222;
       --text-sub: #555555;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --shadow-soft: 0 14px 34px rgba(30, 95, 67, 0.09), 0 6px 14px rgba(0, 0, 0, 0.04);
     }
 
     * {
@@ -27,19 +27,19 @@
     }
 
     body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-      background-color: var(--bg);
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background-color: var(--bg-cream);
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 16px;
+      padding: 18px 16px 28px;
     }
 
     .container {
       width: 100%;
-      max-width: 440px;
+      max-width: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -49,21 +49,23 @@
     /* Header */
     header {
       text-align: center;
-      margin-top: 8px;
+      margin-top: 4px;
     }
-    .badge {
-      display: inline-block;
-      background-color: var(--primary-light);
-      color: #fff;
+    .badge-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #e7f3ec;
+      color: var(--primary);
       font-size: 12px;
       font-weight: 700;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 20px;
       margin-bottom: 6px;
-      letter-spacing: -0.2px;
+      border: 1px solid rgba(78, 168, 125, 0.25);
     }
     h1 {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 800;
       color: var(--primary-dark);
       letter-spacing: -0.5px;
@@ -71,41 +73,42 @@
     .subtitle {
       font-size: 13px;
       color: var(--text-sub);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
-    /* Progress & Navigation */
+    /* Status & Progress */
     .status-bar {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 4px;
+      padding: 2px 6px;
       font-size: 13px;
-      font-weight: 600;
-      color: var(--primary-dark);
+      font-weight: 700;
+      color: var(--primary);
     }
     .progress-track {
       flex: 1;
-      height: 6px;
-      background: #e2ddd3;
-      border-radius: 3px;
+      height: 7px;
+      background: #e8e3d8;
+      border-radius: 4px;
       margin: 0 12px;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
-      background: var(--primary);
+      background: linear-gradient(90deg, var(--primary-light), var(--primary));
       width: 14.28%;
-      transition: width 0.3s ease;
-      border-radius: 3px;
+      transition: width 0.35s ease;
+      border-radius: 4px;
     }
 
-    /* 3D Flip Card Container */
+    /* 3D Flip Card Scene */
     .card-scene {
       width: 100%;
-      height: 480px;
+      height: 485px;
       perspective: 1200px;
+      -webkit-perspective: 1200px;
       cursor: pointer;
     }
 
@@ -114,160 +117,230 @@
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
     }
 
     .card.is-flipped {
       transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
     }
 
+    /* Card Faces */
     .card-face {
       position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
+      -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      border-radius: 24px;
-      background: var(--card-bg);
-      padding: 28px 24px;
+      border-radius: 26px;
+      padding: 26px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 1.5px solid rgba(45, 106, 79, 0.12);
+      background-color: #ffffff;
+      /* 포스터를 투명도 88%의 흰색 레이어로 감싸 은은한 워터마크 효과 구현 */
+      background-image: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), url('poster.png');
+      background-size: cover;
+      background-position: center 30%;
+      border: 1.5px solid rgba(220, 215, 203, 0.7);
+      overflow: hidden;
+    }
+
+    .card-face-front {
+      transform: rotateY(0deg);
+      -webkit-transform: rotateY(0deg);
+    }
+
+    .card-face-back {
+      transform: rotateY(180deg);
+      -webkit-transform: rotateY(180deg);
+      border-top: 5px solid var(--primary);
+    }
+
+    /* 모바일 브라우저 투과 및 잔상 버그 방지 락 */
+    .card.is-flipped .card-face-front {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease 0.1s;
+    }
+    .card:not(.is-flipped) .card-face-front {
+      opacity: 1;
+      transition: opacity 0.2s ease 0.3s;
+    }
+    .card.is-flipped .card-face-back {
+      opacity: 1;
+      transition: opacity 0.2s ease 0.3s;
+    }
+    .card:not(.is-flipped) .card-face-back {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease 0.1s;
     }
 
     /* Front Card (Question) */
-    .card-face-front {
-      background: linear-gradient(145deg, #ffffff 0%, #f4f8f5 100%);
-    }
     .front-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .tag {
-      background: #e8f3ed;
+      background: #eef6f1;
       color: var(--primary);
       padding: 5px 12px;
       font-size: 12px;
-      font-weight: 700;
-      border-radius: 12px;
+      font-weight: 800;
+      border-radius: 14px;
+      letter-spacing: -0.2px;
     }
-    .icon-q {
-      font-size: 32px;
-      font-weight: 900;
-      color: var(--primary-light);
-      opacity: 0.8;
+    .badge-step {
+      font-size: 13px;
+      font-weight: 800;
+      color: #9aa89f;
     }
+
     .front-center {
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 10px 0;
     }
-    .emoji-display {
-      font-size: 54px;
-      margin-bottom: 18px;
+
+    .illustration-wrap {
+      width: 120px;
+      height: 120px;
+      background: #ffffff;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+      margin-bottom: 22px;
+      border: 1.5px solid #f1ece1;
+      transition: transform 0.3s ease;
     }
+    .card-scene:hover .illustration-wrap {
+      transform: scale(1.06) rotate(-2deg);
+    }
+    .illustration-wrap svg {
+      width: 76px;
+      height: 76px;
+    }
+
     .question-title {
       font-size: 21px;
       font-weight: 800;
       line-height: 1.45;
       color: #1a1a1a;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.6px;
     }
+
     .tap-hint {
       text-align: center;
       font-size: 13px;
-      font-weight: 600;
-      color: var(--accent);
-      background: rgba(231, 111, 81, 0.08);
-      padding: 10px;
-      border-radius: 12px;
+      font-weight: 700;
+      color: var(--accent-coral);
+      background: rgba(238, 108, 77, 0.08);
+      padding: 11px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      animation: pulse 2s infinite;
+      animation: pulseAnim 2.2s infinite;
     }
 
     /* Back Card (Answer) */
-    .card-face-back {
-      background: #ffffff;
-      transform: rotateY(180deg);
-      border-left: 5px solid var(--primary);
-    }
     .back-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding-bottom: 10px;
-      border-bottom: 1.5px solid #ece8df;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
     }
     .badge-ans {
       background: var(--primary);
       color: white;
       font-weight: 800;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 6px;
+      font-size: 13px;
+      padding: 4px 9px;
+      border-radius: 8px;
     }
     .back-header h3 {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       color: var(--primary-dark);
+      letter-spacing: -0.4px;
     }
+
     .back-content {
       flex: 1;
-      padding: 14px 0;
+      padding: 14px 2px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 11px;
       overflow-y: auto;
     }
     .info-item {
       display: flex;
       gap: 10px;
       align-items: flex-start;
-      font-size: 14px;
+      font-size: 13.5px;
       line-height: 1.5;
-      color: #333;
+      color: #333333;
     }
-    .item-icon {
-      font-size: 16px;
+    .item-bullet {
+      width: 20px;
+      height: 20px;
+      background: #ebf5ee;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
       margin-top: 1px;
     }
     .info-item strong {
-      color: var(--primary-dark);
+      color: #123d29;
       font-weight: 700;
     }
     .tip-box {
-      background: #faf7f2;
-      border: 1px dashed #d1c7b7;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 12.5px;
+      background: rgba(244, 162, 97, 0.12);
+      border-left: 3px solid var(--accent-amber);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 12px;
       line-height: 1.45;
-      color: #634b35;
+      color: #7a461b;
+      margin-top: 2px;
     }
     .tap-hint-back {
       text-align: center;
       font-size: 12px;
-      color: #999;
-      padding-top: 6px;
+      font-weight: 600;
+      color: #8c857b;
+      padding-top: 8px;
     }
 
-    /* Controls */
+    /* Navigation Controls */
     .controls {
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.3fr;
       gap: 10px;
       margin-top: 2px;
     }
     .btn {
       padding: 14px;
-      border-radius: 14px;
+      border-radius: 16px;
       border: none;
       font-size: 15px;
       font-weight: 700;
@@ -279,18 +352,19 @@
       transition: all 0.2s ease;
     }
     .btn-prev {
-      background: #e9e5dd;
-      color: #4a4a4a;
+      background: #e8e3d8;
+      color: #4a453e;
     }
     .btn-next {
       background: var(--primary);
       color: white;
+      box-shadow: 0 4px 14px rgba(30, 95, 67, 0.25);
     }
     .btn:active {
       transform: scale(0.97);
     }
 
-    /* Jump Indicators (Dots) */
+    /* Indicator Dots */
     .dots {
       display: flex;
       gap: 6px;
@@ -301,9 +375,9 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #d8d3c7;
+      background: #dcd6c9;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
     .dot.active {
       width: 22px;
@@ -311,9 +385,9 @@
       background: var(--primary);
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+    @keyframes pulseAnim {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.985); opacity: 0.85; }
     }
   </style>
 </head>
@@ -321,9 +395,9 @@
 
 <div class="container">
   <header>
-    <div class="badge">2026 이우 학부모축제 최종 공지</div>
-    <h1>현장 200% 즐기기 터치카드</h1>
-    <div class="subtitle">카드를 탭(터치)하면 상세 가이드가 열립니다</div>
+    <div class="badge-top">🌱 2026 이우 학부모축제 공식 가이드</div>
+    <h1>현장 200% 즐기기 치트키</h1>
+    <div class="subtitle">카드를 터치하면 상세 실천 팁이 열립니다</div>
   </header>
 
   <!-- Progress Bar -->
@@ -339,34 +413,36 @@
   <div class="card-scene" onclick="flipCard()">
     <div class="card" id="card">
       
-      <!-- FRONT (Question) -->
+      <!-- FRONT FACE -->
       <div class="card-face card-face-front">
         <div class="front-top">
           <span class="tag" id="card-tag">STEP 1</span>
-          <span class="icon-q">Q</span>
+          <span class="badge-step" id="card-step-num">01 / 07</span>
         </div>
         <div class="front-center">
-          <div class="emoji-display" id="card-emoji">🏃‍♂️</div>
+          <div class="illustration-wrap" id="illustration-box">
+            <!-- Vector SVG Dynamic Loading -->
+          </div>
           <h2 class="question-title" id="card-question">
-            몇 시까지 가야 하나요?<br>도착하자마자 해야 할 것은?
+            몇 시까지 가야 하나요?<br>도착하자마자 할 일은?
           </h2>
         </div>
         <div class="tap-hint">
-          <span>👆 카드를 터치해서 답변 확인하기</span>
+          <span>👆 카드를 터치해 답변 보기</span>
         </div>
       </div>
 
-      <!-- BACK (Answer) -->
+      <!-- BACK FACE -->
       <div class="card-face card-face-back">
         <div class="back-header">
           <span class="badge-ans">A</span>
-          <h3 id="card-back-title">입장 & 오픈런 안내</h3>
+          <h3 id="card-back-title">입장 & 오픈런 수칙</h3>
         </div>
         <div class="back-content" id="card-back-content">
-          <!-- Dynamic Content Loaded by JS -->
+          <!-- Dynamic Content Loaded -->
         </div>
         <div class="tap-hint-back">
-          <span>다시 터치하면 질문으로 돌아갑니다</span>
+          <span>카드를 다시 터치하면 질문으로 돌아갑니다</span>
         </div>
       </div>
 
@@ -375,8 +451,8 @@
 
   <!-- Navigation Buttons -->
   <div class="controls">
-    <button class="btn btn-prev" onclick="prevCard(event)">◀ 이전 질문</button>
-    <button class="btn btn-next" onclick="nextCard(event)">다음 질문 ▶</button>
+    <button class="btn btn-prev" onclick="prevCard(event)">◀ 이전</button>
+    <button class="btn btn-next" onclick="nextCard(event)">다음 질문 보기 ▶</button>
   </div>
 
   <!-- Indicator Dots -->
@@ -384,102 +460,183 @@
 </div>
 
 <script>
+  const cuteIcons = {
+    runner: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="34" fill="#E8F5E9"/>
+        <circle cx="40" cy="40" r="26" fill="#C8E6C9" opacity="0.6"/>
+        <path d="M40 22V40L51 46" stroke="#1E5F43" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="28" cy="24" r="4.5" fill="#EE6C4D"/>
+        <path d="M54 28L57 25M56 34L61 34" stroke="#F4A261" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="40" cy="40" r="3" fill="#1E5F43"/>
+      </svg>
+    `,
+    dish: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="12" width="56" height="56" rx="20" fill="#FFF3E0"/>
+        <path d="M22 42C22 53 30 58 40 58C50 58 58 53 58 42H22Z" fill="#F4A261"/>
+        <rect x="33" y="58" width="14" height="4" rx="2" fill="#E76F51"/>
+        <path d="M52 26L45 42" stroke="#4EA87D" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M30 35C30 30 33 28 33 24M40 35C40 29 43 27 43 22M50 35C50 31 47 29 47 25" stroke="#EE6C4D" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    `,
+    parking: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="34" fill="#E1F5FE"/>
+        <rect x="22" y="38" width="36" height="18" rx="8" fill="#4EA87D"/>
+        <path d="M28 38L33 27H47L52 38H28Z" fill="#1E5F43"/>
+        <circle cx="31" cy="56" r="5" fill="#333333"/>
+        <circle cx="31" cy="56" r="2" fill="#FFFFFF"/>
+        <circle cx="49" cy="56" r="5" fill="#333333"/>
+        <circle cx="49" cy="56" r="2" fill="#FFFFFF"/>
+        <rect x="49" y="16" width="16" height="15" rx="4" fill="#EE6C4D"/>
+        <text x="54" y="28" fill="#FFFFFF" font-size="12" font-weight="bold" font-family="sans-serif">P</text>
+      </svg>
+    `,
+    tent: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="12" width="56" height="56" rx="20" fill="#F3E5F5"/>
+        <path d="M40 22L19 38H61L40 22Z" fill="#9C27B0" opacity="0.8"/>
+        <path d="M40 22L33 38H47L40 22Z" fill="#CE93D8"/>
+        <rect x="24" y="38" width="32" height="20" fill="#FFFFFF"/>
+        <path d="M33 58V44H47V58" fill="#BA68C8"/>
+        <circle cx="56" cy="22" r="3" fill="#EE6C4D"/>
+        <path d="M59 22V14L65 17" stroke="#EE6C4D" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    `,
+    stage: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="34" fill="#FFF8E1"/>
+        <rect x="36" y="20" width="10" height="18" rx="5" fill="#EE6C4D"/>
+        <path d="M31 30C31 36 35 40 41 40C47 40 51 36 51 30" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+        <path d="M41 40V50M34 50H48" stroke="#333333" stroke-width="3" stroke-linecap="round"/>
+        <path d="M22 24L24 20L26 24L30 26L26 28L24 32L22 28L18 26L22 24Z" fill="#F4A261"/>
+        <path d="M56 46L57.5 43L59 46L62 47.5L59 49L57.5 52L56 49L53 47.5L56 46Z" fill="#F4A261"/>
+      </svg>
+    `,
+    water: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="12" width="56" height="56" rx="20" fill="#E0F2F1"/>
+        <path d="M40 20C40 20 26 35 26 45C26 52.7 32.3 59 40 59C47.7 59 54 52.7 54 45C54 35 40 20 40 20Z" fill="#26A69A"/>
+        <circle cx="35" cy="42" r="3" fill="#FFFFFF"/>
+        <path d="M51 25L54 22M54 28L58 28" stroke="#EE6C4D" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    `,
+    sprout: `
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="34" fill="#E8F5E9"/>
+        <path d="M40 58V36" stroke="#4EA87D" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M40 38C30 38 24 28 40 22C40 32 46 38 40 38Z" fill="#1E5F43"/>
+        <path d="M40 44C50 44 55 36 43 31C41 39 36 44 40 44Z" fill="#4EA87D"/>
+        <circle cx="24" cy="26" r="3.5" fill="#EE6C4D"/>
+        <circle cx="56" cy="24" r="3" fill="#F4A261"/>
+      </svg>
+    `
+  };
+
   const cardsData = [
     {
       category: "입장 & 오픈런",
       tag: "STEP 1 · 도착",
-      emoji: "🏃‍♂️",
+      stepNum: "01 / 07",
+      svgIcon: cuteIcons.runner,
       question: "몇 시까지 가야 하나요?<br>도착하자마자 할 일은?",
       backTitle: "오전 11:30 정시 도착 필수!",
       items: [
-        { icon: "⏰", text: "<strong>11:30 길놀이 오프닝:</strong> 첫 시작부터 함께해야 축제의 환대와 열기를 제대로 느낄 수 있습니다." },
-        { icon: "🍿", text: "<strong>웰컴 뻥튀기 챙기기:</strong> 2,000개의 갓 튀긴 따뜻한 뻥튀기를 입장 직후 바로 맛보세요." },
-        { icon: "⚡", text: "<strong>양모 굿즈 오픈런:</strong> 현장 한정 선착순 판매! 관심 있으신 분은 도착 즉시 부스로 직행하세요." },
-        { icon: "🎁", text: "<strong>공식 굿즈 수령:</strong> 텀블러/양말 굿즈는 1부 여유 시간에 각 학년 부스에서 수령하세요." }
+        { num: "1", text: "<strong>11:30 오프닝 길놀이:</strong> 시작부터 함께해야 축제의 큰 환대와 흥을 온전히 누릴 수 있습니다." },
+        { num: "2", text: "<strong>웰컴 뻥튀기 챙기기:</strong> 현장에서 튀긴 따끈한 즉석 뻥튀기(2,000개)를 바로 맛보세요." },
+        { num: "3", text: "<strong>양모 굿즈 선착순 마감:</strong> 오직 현장 한정 판매! 눈여겨보셨다면 입장 즉시 부스로 직행하세요." },
+        { num: "4", text: "<strong>기념 굿즈 수령:</strong> 사전 신청한 텀블러/양말 굿즈는 1부 여유 시간에 각 학년 부스에서 수령합니다." }
       ],
-      tip: "💡 시작 시각에 늦으면 한정판 굿즈와 웰컴 먹거리를 놓칠 수 있습니다!"
+      tip: "💡 시작 시각을 놓치면 한정판 굿즈와 갓 튀긴 웰컴 간식을 놓치기 쉽습니다!"
     },
     {
-      category: "준비물 가이드",
+      category: "가방 속 필수품",
       tag: "STEP 2 · 챙기기",
-      emoji: "🥣",
+      stepNum: "02 / 07",
+      svgIcon: cuteIcons.dish,
       question: "집에서 무엇을 챙겨가야<br>헛걸음하지 않을까요?",
-      backTitle: "가방 속 필수 준비물 체크",
+      backTitle: "개인 식기 및 준비물 체크",
       items: [
-        { icon: "🍴", text: "<strong>개인 식기 & 수저 & 텀블러:</strong> 쓰레기 없는 축제를 위해 식기류는 반드시 챙겨오셔야 합니다." },
-        { icon: "🍲", text: "<strong>입구 넓은 다회용 그릇:</strong> 뜨거운 호박죽과 특선 먹거리를 든든히 담아갈 수 있습니다." },
-        { icon: "👜", text: "<strong>개인 쓰레기 봉투:</strong> 교내에 쓰레기통이 없으니 되가져갈 봉투를 챙겨주세요." },
-        { icon: "🎨", text: "<strong>패브릭 소품 지참:</strong> 에코백이나 파우치를 가져오시면 이우 심볼 실크스크린을 무료로 찍어드립니다." }
+        { num: "1", text: "<strong>개인 수저 & 텀블러:</strong> 쓰레기 없는 축제를 위해 개인 식기는 필수입니다." },
+        { num: "2", text: "<strong>입구 넓은 다회용 그릇:</strong> 뜨거운 호박죽과 특선 간식을 넉넉히 담아갈 수 있습니다." },
+        { num: "3", text: "<strong>개인 쓰레기 봉투:</strong> 교내에 일반 쓰레기통이 없으니 되가져갈 봉투를 꼭 챙겨주세요." },
+        { num: "4", text: "<strong>패브릭 소품 지참:</strong> 에코백이나 파우치를 가져오시면 교문위 부스에서 이우 심볼 실크스크린을 무료로 찍어드립니다." }
       ],
-      tip: "💡 식기 미지참 시 현장 먹거리 이용에 큰 제한이 있을 수 있습니다."
+      tip: "💡 개인 식기를 챙기지 않으면 먹거리 부스 이용에 제한이 생길 수 있습니다."
     },
     {
       category: "교통 & 주차",
       tag: "STEP 3 · 이동",
-      emoji: "🚗",
+      stepNum: "03 / 07",
+      svgIcon: cuteIcons.parking,
       question: "학교 운동장에<br>차를 세울 수 있나요?",
-      backTitle: "교내 주차 불가 & 외부 주차 안내",
+      backTitle: "교내 주차 불가 & 외부 주차장",
       items: [
-        { icon: "🚫", text: "<strong>교내 주차 전면 통제:</strong> 축제 지원 차량 외 모든 일반 차량은 교내 진입이 불가합니다." },
-        { icon: "🅿️", text: "<strong>동천근린공원 주차장:</strong> 인근 공원 주차장을 우선 이용해 주세요." },
-        { icon: "🅿️", text: "<strong>동천자이 공영주차장:</strong> 동천자이 아파트 앞 공영주차장은 주말 무료 개방됩니다." }
+        { num: "1", text: "<strong>교내 주차 전면 통제:</strong> 공식 지원 차량 외 일반 차량은 교내 진입이 불가합니다." },
+        { num: "2", text: "<strong>동천근린공원 주차장:</strong> 인근 근린공원 주차장을 우선 이용해 주세요." },
+        { num: "3", text: "<strong>동천자이 공영주차장:</strong> 동천자이 아파트 앞 공영주차장(주말 무료)을 이용할 수 있습니다." }
       ],
-      tip: "💡 골목길 혼잡 방지를 위해 도보 또는 카풀·대중교통 이용을 강력히 권장합니다."
+      tip: "💡 학교 진입 골목이 매우 혼잡하므로 대중교통 이용 및 카풀을 강력 권장합니다."
     },
     {
       category: "1부 탐방 코스",
-      tag: "STEP 4 · 즐기기",
-      emoji: "🎪",
+      tag: "STEP 4 · 둘러보기",
+      stepNum: "04 / 07",
+      svgIcon: cuteIcons.tent,
       question: "1부 (11:30~13:40)에는<br>어디서 무엇을 즐기나요?",
-      backTitle: "학교 곳곳 보물찾기 코스",
+      backTitle: "교내 곳곳 탐방 & 체험 코스",
       items: [
-        { icon: "🍱", text: "<strong>풍성한 먹거리:</strong> 웰컴 푸드와 학년별 특별 간식이 오픈됩니다." },
-        { icon: "📸", text: "<strong>기수별 사진전 & 포토존:</strong> 추억이 담긴 사진전과 공동창작물을 둘러보세요." },
-        { icon: "📻", text: "<strong>찾아가는 이우라디오:</strong> 사연과 신청곡이 축제 현장에 실시간 방송됩니다." },
-        { icon: "🎬", text: "<strong>위원회 부스:</strong> 영화 상영(신학습관 B1 13:00), 실크스크린(13:10), 키링 나눔, 공유책장." }
+        { num: "1", text: "<strong>먹거리 & 마켓:</strong> 웰컴 푸드와 학년별 정성 가득한 먹거리가 오픈됩니다." },
+        { num: "2", text: "<strong>추억 전시 & 포토존:</strong> 기수별 활동 사진전과 공동창작물을 감상하세요." },
+        { num: "3", text: "<strong>찾아가는 이우라디오:</strong> 신청곡과 사연이 축제장 전체에 실시간 방송됩니다." },
+        { num: "4", text: "<strong>위원회 부스 참여:</strong> 영상 상영(신학습관 B1 13:00), 키링 나눔, 실크스크린(13:10), 공유책장." }
       ],
-      tip: "💡 2부가 시작되면 부스가 축소되므로 1부 동안 부지런히 교내를 탐방하세요!"
+      tip: "💡 14시부터는 운동장 2부가 시작되어 부스가 축소되니 1부에 부지런히 둘러보세요!"
     },
     {
       category: "2부 공연 & 대동",
       tag: "STEP 5 · 모이기",
-      emoji: "💃",
+      stepNum: "05 / 07",
+      svgIcon: cuteIcons.stage,
       question: "오후 2시 메인 무대와<br>대동놀이는 어디서 열리나요?",
-      backTitle: "운동장 전원 집결 & 무대",
+      backTitle: "운동장 전원 집결 & 대동 피날레",
       items: [
-        { icon: "📍", text: "<strong>장소:</strong> 이우학교 대운동장 전면 집결 (14:00~16:00)" },
-        { icon: "🎸", text: "<strong>7팀의 감동 무대:</strong> 열정과 실력을 담은 공연이 연속으로 펼쳐집니다." },
-        { icon: "🕺", text: "<strong>댄스 챌린지:</strong> 다 함께 자리에서 일어나 신나게 춤추는 시간!" },
-        { icon: "🤝", text: "<strong>대동놀이 피날레:</strong> 모두가 손 맞잡고 하나 되는 이우의 전통 대동제." }
+        { num: "1", text: "<strong>집결 장소:</strong> 이우학교 대운동장 (14:00~16:00 전원 모임)" },
+        { num: "2", text: "<strong>7팀의 감동 무대:</strong> 열정을 담아 준비한 축하 공연이 이어집니다." },
+        { num: "3", text: "<strong>다 함께 댄스 챌린지:</strong> 누구나 쉽게 따라 출 수 있는 신나는 춤의 시간!" },
+        { num: "4", text: "<strong>하나 되는 대동놀이:</strong> 모두가 손잡고 운동장을 누비며 축제의 피날레를 장식합니다." }
       ],
-      tip: "💡 관람 에티켓은 '격한 리액션과 아낌없는 함성'입니다. 돗자리를 깔면 더 편합니다."
+      tip: "💡 공연 관람의 필수 덕목은 '격한 리액션'입니다. 돗자리를 지참하시면 더욱 편합니다."
     },
     {
-      category: "화장실 & 세척",
+      category: "화장실 & 세척 수칙",
       tag: "STEP 6 · 시설",
-      emoji: "🚻",
-      question: "화장실 위치는 어디인가요?<br>사용한 그릇을 씻어도 되나요?",
-      backTitle: "화장실 사용 및 세척 금지 수칙",
+      stepNum: "06 / 07",
+      svgIcon: cuteIcons.water,
+      question: "화장실은 어디인가요?<br>그릇 세척이 가능한가요?",
+      backTitle: "개방 화장실 & 세면대 세척 금지",
       items: [
-        { icon: "📍", text: "<strong>사용 가능 화장실:</strong> 도서관 옆 화장실, 달콤샘 앞 화장실." },
-        { icon: "❌", text: "<strong>사용 금지:</strong> 급식실 옆 화장실은 사용이 불가합니다." },
-        { icon: "⚠️", text: "<strong>세면대 세척 절대 금지:</strong> 설거지, 손빨래, 잔반 처리는 배관 고장의 원인이 됩니다." }
+        { num: "1", text: "<strong>개방 화장실:</strong> 도서관 옆 화장실, 달콤샘 앞 화장실 이용." },
+        { num: "2", text: "<strong>절대 사용 금지:</strong> 급식실 옆 화장실은 개방되지 않습니다." },
+        { num: "3", text: "<strong>세면대 세척 절대 불가:</strong> 설거지, 손빨래, 잔반 처리는 배관 고장을 유발합니다." }
       ],
-      tip: "💡 사용한 그릇은 비닐팩에 넣어 그대로 집으로 가져가 세척해 주세요."
+      tip: "💡 사용한 식기는 닦지 마시고 지퍼백이나 비닐봉지에 담아 귀가 후 씻어주세요."
     },
     {
       category: "클린 에티켓",
       tag: "STEP 7 · 마무리",
-      emoji: "🌱",
-      question: "아름다운 마무리를 위해<br>꼭 지켜야 할 약속은?",
+      stepNum: "07 / 07",
+      svgIcon: cuteIcons.sprout,
+      question: "마지막까지 아름답게!<br>꼭 지켜야 할 약속은?",
       backTitle: "머문 자리를 깨끗하게",
       items: [
-        { icon: "🗑️", text: "<strong>쓰레기는 집으로:</strong> 행사장에 일반 쓰레기통이 없습니다. 각 가정으로 되가져갑니다." },
-        { icon: "🚭", text: "<strong>교내 전 구역 절대 금연:</strong> 아이들의 배움터이므로 교내 전면 금연입니다." },
-        { icon: "🍳", text: "<strong>요리방 식기 반출 금지:</strong> 실습실 비품이 밖으로 나가지 않도록 지켜주세요." },
-        { icon: "🧹", text: "<strong>모두 함께 뒷정리:</strong> 축제 후 의자 정리와 청소에 동참해 주시면 완성됩니다." }
+        { num: "1", text: "<strong>쓰레기 되가져가기:</strong> 교내에 일반 쓰레기통이 없습니다. 각 가정으로 수거해 갑니다." },
+        { num: "2", text: "<strong>교내 전 구역 절대 금연:</strong> 학생들의 배움터이므로 교내 및 통학로는 전면 금연입니다." },
+        { num: "3", text: "<strong>요리방 집기 반출 금지:</strong> 실습실 기물 보호를 위해 외부 반출을 엄금합니다." },
+        { num: "4", text: "<strong>축제 후 뒷정리 함께하기:</strong> 행사 후 의자 정리와 주변 청소에 손길을 보태주세요." }
       ],
-      tip: "💡 이우 학부모의 품격은 행사가 끝난 뒤 깨끗한 운동장에서 드러납니다."
+      tip: "💡 이우 학부모의 품격은 모든 행사가 끝난 뒤 깨끗해진 운동장에서 완성됩니다."
     }
   ];
 
@@ -489,17 +646,18 @@
   function renderCard(index) {
     const data = cardsData[index];
 
-    // Card Category & Progress
+    // Status bar & Progress
     document.getElementById("card-category").innerText = data.category;
     document.getElementById("card-counter").innerText = `${index + 1} / ${cardsData.length}`;
     document.getElementById("progress-fill").style.width = `${((index + 1) / cardsData.length) * 100}%`;
 
-    // Front View
+    // Front Face
     document.getElementById("card-tag").innerText = data.tag;
-    document.getElementById("card-emoji").innerText = data.emoji;
+    document.getElementById("card-step-num").innerText = data.stepNum;
+    document.getElementById("illustration-box").innerHTML = data.svgIcon;
     document.getElementById("card-question").innerHTML = data.question;
 
-    // Back View
+    // Back Face
     document.getElementById("card-back-title").innerText = data.backTitle;
     const backContentContainer = document.getElementById("card-back-content");
     backContentContainer.innerHTML = "";
@@ -507,7 +665,7 @@
     data.items.forEach(item => {
       const row = document.createElement("div");
       row.className = "info-item";
-      row.innerHTML = `<span class="item-icon">${item.icon}</span><span>${item.text}</span>`;
+      row.innerHTML = `<span class="item-bullet">${item.num}</span><span>${item.text}</span>`;
       backContentContainer.appendChild(row);
     });
 
@@ -518,7 +676,6 @@
       backContentContainer.appendChild(tipDiv);
     }
 
-    // Update Dots
     updateDots();
   }
 
@@ -533,7 +690,7 @@
       setTimeout(() => {
         currentIndex--;
         renderCard(currentIndex);
-      }, 150);
+      }, 140);
     }
   }
 
@@ -544,7 +701,7 @@
       setTimeout(() => {
         currentIndex++;
         renderCard(currentIndex);
-      }, 150);
+      }, 140);
     }
   }
 
@@ -560,7 +717,7 @@
         setTimeout(() => {
           currentIndex = idx;
           renderCard(currentIndex);
-        }, 150);
+        }, 140);
       };
       dotsContainer.appendChild(dot);
     });
@@ -573,7 +730,7 @@
     });
   }
 
-  // Initial Load
+  // Init
   initDots();
   renderCard(currentIndex);
 </script>
