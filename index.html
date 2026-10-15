@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>2026 이우 학부모축제 완벽 가이드 | 터치카드</title>
 
-  <!-- 카카오톡, 페이스북, 밴드 링크 미리보기 (오픈그래프) -->
+  <!-- 카카오톡, 페이스북, 밴드 링크 미리보기 (포스터 이미지 전용) -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://changikhwang-create.github.io/ewoo_touch_card_2026_1017/">
   <meta property="og:title" content="2026 이우 학부모축제 스마트 터치카드">
@@ -27,7 +27,7 @@
       --bg: #f5f2eb;
       --card-radius: 10px;
       --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-      --card-ratio: 1 / 1.42; /* 여백 잘림 방지용 실물 비율 */
+      --card-ratio: 1 / 1.42; /* 카드뉴스 실물 비율 (여백 잘림 방지) */
     }
 
     * {
@@ -86,7 +86,7 @@
       margin-top: 2px;
     }
 
-    /* 4분할 그리드 */
+    /* 4분할 2x2 그리드 */
     .grid-board {
       width: 100%;
       display: grid;
@@ -212,7 +212,7 @@
       user-select: none;
     }
 
-    /* 앞뒷면 투과 방지 락 */
+    /* 앞·뒷면 투과 방지 락 */
     .modal-card-front {
       transform: rotateY(0deg);
       -webkit-transform: rotateY(0deg);
@@ -223,7 +223,7 @@
       opacity: 0;
       transition: visibility 0s 0.25s, opacity 0.2s linear;
     }
-    .modal-card.is-front .modal-card-front {
+    .modal-card:not(.is-back) .modal-card-front {
       visibility: visible;
       opacity: 1;
       transition: opacity 0.2s linear 0.1s;
@@ -239,7 +239,7 @@
       opacity: 1;
       transition: opacity 0.2s linear 0.1s;
     }
-    .modal-card.is-front .modal-card-back {
+    .modal-card:not(.is-back) .modal-card-back {
       visibility: hidden;
       opacity: 0;
       transition: visibility 0s 0.25s, opacity 0.2s linear;
@@ -289,24 +289,27 @@
   <!-- 4분할 그리드 -->
   <div class="grid-board">
     
-    <!-- 1구역: poster.png 파일 직접 로드 -->
+    <!-- 1구역: 원래 1번 앞면 카드(card1_front.png)로 정상 복구 -->
     <div class="grid-card" onclick="openFlipFullscreen(0)">
-      <img src="poster.png" alt="축제 포스터">
+      <img src="card1_front.png" alt="1번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
+    <!-- 2구역: 2번 앞면 카드 -->
     <div class="grid-card" onclick="openFlipFullscreen(1)">
-      <img src="card2_front.png" alt="#2 일정표">
+      <img src="card2_front.png" alt="2번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
+    <!-- 3구역: 3번 앞면 카드 -->
     <div class="grid-card" onclick="openFlipFullscreen(2)">
-      <img src="card3_front.png" alt="#4 먹거리 안내">
+      <img src="card3_front.png" alt="3번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
+    <!-- 4구역: 4번 앞면 카드 -->
     <div class="grid-card" onclick="openFlipFullscreen(3)">
-      <img src="card4_front.png" alt="#6 무대공연">
+      <img src="card4_front.png" alt="4번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
@@ -338,9 +341,9 @@
 </div>
 
 <script>
-  // 1번 카드의 앞면을 poster.png로 설정
+  // 1번 카드를 card1_front.png로 원래대로 연결
   const cardsData = [
-    { front: 'poster.png', back: 'card1_back.png' },
+    { front: 'card1_front.png', back: 'card1_back.png' },
     { front: 'card2_front.png', back: 'card2_back.png' },
     { front: 'card3_front.png', back: 'card3_back.png' },
     { front: 'card4_front.png', back: 'card4_back.png' }
