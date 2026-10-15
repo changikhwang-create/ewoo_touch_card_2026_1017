@@ -27,7 +27,7 @@
       --bg: #f5f2eb;
       --card-radius: 10px;
       --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-      --card-ratio: 1 / 1.42; /* 카드뉴스 실물 비율 (여백 잘림 방지) */
+      --card-ratio: 1 / 1.42; /* 카드 실물 비율 (여백 잘림 방지) */
     }
 
     * {
@@ -135,7 +135,7 @@
       pointer-events: none;
     }
 
-    /* 전체화면 3D 플립 모달 */
+    /* ================= 전체화면 3D 플립 모달 ================= */
     .fullscreen-modal {
       position: fixed;
       inset: 0;
@@ -149,7 +149,7 @@
       padding: 12px 10px;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
     }
     .fullscreen-modal.active {
       opacity: 1;
@@ -172,23 +172,38 @@
       -webkit-transform-style: preserve-3d;
       border-radius: 14px;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-      transition: transform 0.65s cubic-bezier(0.34, 1.5, 0.64, 1);
       cursor: pointer;
     }
 
-    .modal-card.is-closed {
-      transform: scale(0.6) rotateY(0deg);
-      transition: none;
-    }
-    .modal-card.is-back {
-      transform: scale(1) rotateY(180deg);
-      -webkit-transform: rotateY(180deg);
-    }
-    .modal-card.is-front {
-      transform: scale(1) rotateY(0deg);
-      -webkit-transform: rotateY(0deg);
+    /* [핵심] 터치 즉시 100% 확실하게 뒷면으로 촤라락 뒤집히는 키프레임 애니메이션 */
+    .modal-card.animate-flip-in {
+      animation: flipInToBack 0.52s cubic-bezier(0.2, 0.85, 0.25, 1) forwards;
     }
 
+    @keyframes flipInToBack {
+      0% {
+        transform: scale(0.65) rotateY(0deg);
+        -webkit-transform: scale(0.65) rotateY(0deg);
+      }
+      100% {
+        transform: scale(1) rotateY(180deg);
+        -webkit-transform: scale(1) rotateY(180deg);
+      }
+    }
+
+    /* 수동 앞/뒤 토글 시 부드러운 회전 */
+    .modal-card.is-front {
+      transform: scale(1) rotateY(0deg);
+      -webkit-transform: scale(1) rotateY(0deg);
+      transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .modal-card.is-back:not(.animate-flip-in) {
+      transform: scale(1) rotateY(180deg);
+      -webkit-transform: scale(1) rotateY(180deg);
+      transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    /* 모달 카드 앞·뒷면 면체 설정 */
     .modal-card-face {
       position: absolute;
       inset: 0;
@@ -212,37 +227,15 @@
       user-select: none;
     }
 
-    /* 앞·뒷면 투과 방지 락 */
+    /* 3D 겹침 및 투과를 완벽히 막아주는 Z축 미세 분리 */
     .modal-card-front {
-      transform: rotateY(0deg);
-      -webkit-transform: rotateY(0deg);
-      z-index: 2;
-    }
-    .modal-card.is-back .modal-card-front {
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s 0.25s, opacity 0.2s linear;
-    }
-    .modal-card:not(.is-back) .modal-card-front {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity 0.2s linear 0.1s;
+      transform: rotateY(0deg) translateZ(1px);
+      -webkit-transform: rotateY(0deg) translateZ(1px);
     }
 
     .modal-card-back {
-      transform: rotateY(180deg);
-      -webkit-transform: rotateY(180deg);
-      z-index: 1;
-    }
-    .modal-card.is-back .modal-card-back {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity 0.2s linear 0.1s;
-    }
-    .modal-card:not(.is-back) .modal-card-back {
-      visibility: hidden;
-      opacity: 0;
-      transition: visibility 0s 0.25s, opacity 0.2s linear;
+      transform: rotateY(180deg) translateZ(1px);
+      -webkit-transform: rotateY(180deg) translateZ(1px);
     }
 
     .modal-controls {
@@ -289,25 +282,21 @@
   <!-- 4분할 그리드 -->
   <div class="grid-board">
     
-    <!-- 1구역: 원래 1번 앞면 카드(card1_front.png)로 정상 복구 -->
     <div class="grid-card" onclick="openFlipFullscreen(0)">
       <img src="card1_front.png" alt="1번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
-    <!-- 2구역: 2번 앞면 카드 -->
     <div class="grid-card" onclick="openFlipFullscreen(1)">
       <img src="card2_front.png" alt="2번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
-    <!-- 3구역: 3번 앞면 카드 -->
     <div class="grid-card" onclick="openFlipFullscreen(2)">
       <img src="card3_front.png" alt="3번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
-    <!-- 4구역: 4번 앞면 카드 -->
     <div class="grid-card" onclick="openFlipFullscreen(3)">
       <img src="card4_front.png" alt="4번 앞면 카드">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
@@ -319,7 +308,7 @@
 <!-- 전체화면 3D 플립 모달 -->
 <div class="fullscreen-modal" id="modal" onclick="closeFullscreen()">
   <div class="stage-3d" onclick="event.stopPropagation()">
-    <div class="modal-card is-closed" id="modal-card" onclick="toggleFlip()">
+    <div class="modal-card" id="modal-card" onclick="toggleFlip()">
       
       <div class="modal-card-face modal-card-front">
         <img id="modal-img-front" src="" alt="앞면">
@@ -341,7 +330,6 @@
 </div>
 
 <script>
-  // 1번 카드를 card1_front.png로 원래대로 연결
   const cardsData = [
     { front: 'card1_front.png', back: 'card1_back.png' },
     { front: 'card2_front.png', back: 'card2_back.png' },
@@ -357,24 +345,24 @@
 
   let isBackSide = true;
 
+  // 카드 터치 시: 타이머 지연 없이 CSS 키프레임 애니메이션 즉시 기동
   function openFlipFullscreen(index) {
     const data = cardsData[index];
     imgFront.src = data.front;
     imgBack.src = data.back;
 
-    modalCard.className = 'modal-card is-closed';
-    modal.classList.add('active');
+    isBackSide = true;
+    flipBtnText.innerText = '앞면 보기';
 
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        modalCard.className = 'modal-card is-back';
-        isBackSide = true;
-        flipBtnText.innerText = '앞면 보기';
-      }, 20);
-    });
+    // 클래스를 부여하는 순간 0도(앞) -> 180도(뒤)로 즉시 100% 확실하게 회전
+    modalCard.className = 'modal-card is-back animate-flip-in';
+    modal.classList.add('active');
   }
 
+  // 모달 내부에서 터치 시 앞/뒤 토글
   function toggleFlip() {
+    modalCard.classList.remove('animate-flip-in');
+    
     isBackSide = !isBackSide;
     if (isBackSide) {
       modalCard.className = 'modal-card is-back';
@@ -385,9 +373,10 @@
     }
   }
 
+  // 닫기
   function closeFullscreen() {
-    modalCard.className = 'modal-card is-closed';
     modal.classList.remove('active');
+    modalCard.className = 'modal-card';
   }
 </script>
 
