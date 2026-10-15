@@ -3,22 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!-- 1. 브라우저 탭 제목 -->
   <title>2026 이우 학부모축제 완벽 가이드 | 터치카드</title>
-  <!-- ▼▼▼ 여기서부터 추가 ▼▼▼ -->
-  <!-- 카카오톡, 페이스북, 밴드 링크 미리보기 설정 -->
+
+  <!-- 카카오톡, 페이스북, 밴드 링크 미리보기 (오픈그래프) -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://내사이트도메인주소/"> <!-- 실제 터치카드 웹 링크 -->
+  <meta property="og:url" content="https://changikhwang-create.github.io/ewoo_touch_card_2026_1017/">
   <meta property="og:title" content="2026 이우 학부모축제 스마트 터치카드">
   <meta property="og:description" content="카드를 탭하면 3D 플립으로 펼쳐지는 현장 완벽 가이드!">
-  <meta property="og:image" content="https://https://changikhwang-create.github.io/ewoo_touch_card_2026_1017/poster.png"> <!-- 1단계에서 확인한 포스터 절대주소 -->
+  <meta property="og:image" content="https://changikhwang-create.github.io/ewoo_touch_card_2026_1017/poster.png">
 
-  <!-- 트위터(X) 링크 미리보기 대응 -->
+  <!-- 트위터(X) 링크 미리보기 -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="2026 이우 학부모축제 스마트 터치카드">
   <meta name="twitter:description" content="카드를 탭하면 3D 플립으로 펼쳐지는 현장 완벽 가이드!">
-  <meta name="twitter:image" content="https://https://changikhwang-create.github.io/ewoo_touch_card_2026_1017/poster.png">
-  <!-- ▲▲▲ 여기까지 추가 ▲▲▲ -->
+  <meta name="twitter:image" content="https://changikhwang-create.github.io/ewoo_touch_card_2026_1017/poster.png">
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
@@ -27,8 +25,9 @@
       --primary: #1e5f43;
       --accent: #ee6c4d;
       --bg: #f5f2eb;
-      --card-radius: 12px;
-      --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --card-radius: 10px;
+      --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      --card-ratio: 1 / 1.42; /* 여백 잘림 방지용 실물 비율 */
     }
 
     * {
@@ -47,7 +46,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 12px 10px;
+      padding: 8px 10px;
       overflow-x: hidden;
     }
 
@@ -57,12 +56,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    /* 헤더 */
     header {
       text-align: center;
+      margin-bottom: 2px;
     }
     .badge {
       display: inline-block;
@@ -70,88 +69,84 @@
       color: var(--primary);
       font-size: 11px;
       font-weight: 800;
-      padding: 3px 10px;
-      border-radius: 12px;
+      padding: 2px 8px;
+      border-radius: 10px;
       margin-bottom: 2px;
     }
     h1 {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       color: #173d2c;
       letter-spacing: -0.4px;
+      line-height: 1.2;
     }
     .hint-sub {
-      font-size: 12px;
+      font-size: 11.5px;
       color: #666;
       margin-top: 2px;
     }
 
-    /* 4분할 2x2 그리드 */
+    /* 4분할 그리드 */
     .grid-board {
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 4px;
+      gap: 8px;
     }
 
-    /* 개별 썸네일 카드: 이미지 비율에 최적화된 9/16 비율 */
     .grid-card {
       position: relative;
       width: 100%;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: var(--card-ratio);
       border-radius: var(--card-radius);
       overflow: hidden;
       background: #ffffff;
       box-shadow: var(--card-shadow);
-      border: 1.5px solid rgba(220, 215, 203, 0.7);
+      border: 1px solid rgba(220, 215, 203, 0.8);
       cursor: pointer;
       display: flex;
-      align-items: center;
-      justify-content: center;
       transition: transform 0.2s ease;
     }
     .grid-card:active {
       transform: scale(0.97);
     }
     
-    /* 잘림 방지: contain 적용 */
     .grid-card img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: fill;
       display: block;
       pointer-events: none;
     }
 
     .tap-tag {
       position: absolute;
-      bottom: 6px;
+      bottom: 5px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.68);
       color: #ffffff;
       font-size: 10px;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 14px;
+      padding: 2px 8px;
+      border-radius: 12px;
       backdrop-filter: blur(4px);
       white-space: nowrap;
       pointer-events: none;
     }
 
-    /* ================= 전체화면 3D 플립 모달 ================= */
+    /* 전체화면 3D 플립 모달 */
     .fullscreen-modal {
       position: fixed;
       inset: 0;
-      background: rgba(18, 25, 21, 0.9);
+      background: rgba(18, 25, 21, 0.92);
       backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      padding: 16px 12px;
+      padding: 12px 10px;
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -161,11 +156,10 @@
       visibility: visible;
     }
 
-    /* 화면 높이와 너비를 자동 계산하여 상하좌우가 온전히 유지되는 무대 */
     .stage-3d {
-      width: min(88vw, calc(78vh * 9 / 16));
-      height: min(78vh, calc(88vw * 16 / 9));
-      aspect-ratio: 9 / 16;
+      width: min(92vw, calc(80vh / 1.42));
+      height: min(80vh, calc(92vw * 1.42));
+      aspect-ratio: var(--card-ratio);
       perspective: 1400px;
       -webkit-perspective: 1400px;
     }
@@ -176,7 +170,7 @@
       position: relative;
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
-      border-radius: 16px;
+      border-radius: 14px;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
       transition: transform 0.65s cubic-bezier(0.34, 1.5, 0.64, 1);
       cursor: pointer;
@@ -200,28 +194,25 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
-      background: #faf8f5;
+      background: #ffffff;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* 전체화면에서도 외곽선/글씨가 잘리지 않도록 contain 적용 */
     .modal-card-face img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: fill;
       display: block;
       pointer-events: none;
       user-select: none;
     }
 
-    /* 앞·뒷면 투과 방지 락 */
+    /* 앞뒷면 투과 방지 락 */
     .modal-card-front {
       transform: rotateY(0deg);
       -webkit-transform: rotateY(0deg);
@@ -254,18 +245,17 @@
       transition: visibility 0s 0.25s, opacity 0.2s linear;
     }
 
-    /* 하단 버튼 */
     .modal-controls {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 14px;
+      margin-top: 12px;
     }
     .btn-action {
       background: rgba(255, 255, 255, 0.2);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.4);
-      padding: 8px 18px;
+      padding: 7px 18px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: 700;
@@ -299,25 +289,22 @@
   <!-- 4분할 그리드 -->
   <div class="grid-board">
     
-    <!-- 1구역: 축제 포스터 -->
+    <!-- 1구역: poster.png 파일 직접 로드 -->
     <div class="grid-card" onclick="openFlipFullscreen(0)">
-      <img src="card1_front.png" alt="축제 포스터">
+      <img src="poster.png" alt="축제 포스터">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
-    <!-- 2구역: #2 일정표 -->
     <div class="grid-card" onclick="openFlipFullscreen(1)">
       <img src="card2_front.png" alt="#2 일정표">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
-    <!-- 3구역: #4 먹거리 -->
     <div class="grid-card" onclick="openFlipFullscreen(2)">
       <img src="card3_front.png" alt="#4 먹거리 안내">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
     </div>
 
-    <!-- 4구역: #6 무대공연 -->
     <div class="grid-card" onclick="openFlipFullscreen(3)">
       <img src="card4_front.png" alt="#6 무대공연">
       <div class="tap-tag">👆 탭하여 뒷면 보기</div>
@@ -326,17 +313,15 @@
   </div>
 </div>
 
-<!-- ================= 전체화면 3D 플립 모달 ================= -->
+<!-- 전체화면 3D 플립 모달 -->
 <div class="fullscreen-modal" id="modal" onclick="closeFullscreen()">
   <div class="stage-3d" onclick="event.stopPropagation()">
     <div class="modal-card is-closed" id="modal-card" onclick="toggleFlip()">
       
-      <!-- 모달 카드 앞면 -->
       <div class="modal-card-face modal-card-front">
         <img id="modal-img-front" src="" alt="앞면">
       </div>
 
-      <!-- 모달 카드 뒷면 -->
       <div class="modal-card-face modal-card-back">
         <img id="modal-img-back" src="" alt="뒷면">
       </div>
@@ -344,7 +329,6 @@
     </div>
   </div>
 
-  <!-- 컨트롤 버튼 -->
   <div class="modal-controls" onclick="event.stopPropagation()">
     <button class="btn-action" onclick="toggleFlip()">
       <span id="flip-btn-icon">🔄</span> <span id="flip-btn-text">앞면 보기</span>
@@ -354,11 +338,12 @@
 </div>
 
 <script>
+  // 1번 카드의 앞면을 poster.png로 설정
   const cardsData = [
-    { front: 'card1_front.png', back: 'card1_back.png' }, // 포스터 ↔ #1 오프닝
-    { front: 'card2_front.png', back: 'card2_back.png' }, // #2 일정표 ↔ #3 공간배치도
-    { front: 'card3_front.png', back: 'card3_back.png' }, // #4 먹거리 ↔ #5 볼거리/놀거리
-    { front: 'card4_front.png', back: 'card4_back.png' }  // #6 무대공연 ↔ #7 기타안내
+    { front: 'poster.png', back: 'card1_back.png' },
+    { front: 'card2_front.png', back: 'card2_back.png' },
+    { front: 'card3_front.png', back: 'card3_back.png' },
+    { front: 'card4_front.png', back: 'card4_back.png' }
   ];
 
   const modal = document.getElementById('modal');
